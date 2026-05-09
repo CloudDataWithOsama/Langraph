@@ -25,7 +25,7 @@ class MessagesState(TypedDict): # Data Structure (Dict), Ye define karta hai ke 
 # Tools setup
 tavily_tool = TavilySearch(max_results=2)
 # Custom tools
-def deposit_money(bankName: str, account: int, amount: float = 1500) -> dict:
+def deposit_money(bankName: str, account: int=123444, amount: float = 1500) -> dict:
     """
         Deposit money into an account.
         Args:
@@ -36,7 +36,7 @@ def deposit_money(bankName: str, account: int, amount: float = 1500) -> dict:
             dict: Confirmation message.
     """
     print("---Deposit Money Tool Invoked---")
-    return {"message": f"Successfully deposited {amount} into account {account} for {bankName}."}
+    return {"status": "ok", "balance": 5000}
 
 tools = [tavily_tool, deposit_money]
 model_with_tools = model.bind_tools(tools)
@@ -56,7 +56,7 @@ def router_function(state: MessagesState) -> Literal["tools", "__end__"]:
 # 2. Nodes
 def node1(current_state: MessagesState) -> MessagesState:
     print("---Node 1 Running--- ", current_state)
-    response = model.invoke(current_state["messages"])
+    response = model_with_tools.invoke(current_state["messages"])
     return {"messages": [response]}
 
 # def node2(current_state: MessagesState) -> MessagesState:
@@ -68,7 +68,6 @@ def node1(current_state: MessagesState) -> MessagesState:
 #     print("Node 2: model_with_tools Response:", call_response)
 #     return {"messages": [call_response]}
 
-tool_node3 = ToolNode(tools)
 
 # 3. Graph build karein
 workflow: StateGraph = StateGraph(MessagesState)
@@ -76,15 +75,14 @@ workflow: StateGraph = StateGraph(MessagesState)
 # Nodes add karein
 workflow.add_node("node1", node1)
 # workflow.add_node("node2", node2)
-workflow.add_node("tools", tool_node3)
+workflow.add_node("tools", ToolNode(tools))
 
 
 
 # Edges (Raaste) connect karein
 workflow.add_edge(START, "node1")
-# workflow.add_conditional_edges("node2", router_function)
-# workflow.add_edge("node1", "node2")
-workflow.add_edge("node1", END)
+workflow.add_conditional_edges("node1", tools_condition)
+workflow.add_edge("tools", END)
 
 
 # Graph compile
