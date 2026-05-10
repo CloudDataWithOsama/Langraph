@@ -6,12 +6,12 @@ config:
 graph TD;
         __start__([<p>__start__</p>]):::first
         node1(node1)
-        tools(tools)
+        toolsNode(toolsNode)
         __end__([<p>__end__</p>]):::last
         __start__ --> node1;
         node1 -.-> __end__;
-        node1 -.-> tools;
-        tools --> __end__;
+        node1 -. &nbsp;tools&nbsp; .-> toolsNode;
+        toolsNode --> node1;
         classDef default fill:#f2f0ff,line-height:1.2
         classDef first fill-opacity:0
         classDef last fill:#bfb6fc

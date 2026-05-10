@@ -36,7 +36,7 @@ def deposit_money(bankName: str, account: int=123444, amount: float = 1500) -> d
             dict: Confirmation message.
     """
     print("---Deposit Money Tool Invoked---")
-    return {"status": "ok", "balance": 5000}
+    return {"status": "Success HO GYA", "balance": 5000}
 
 tools = [tavily_tool, deposit_money]
 model_with_tools = model.bind_tools(tools)
@@ -59,31 +59,37 @@ def node1(current_state: MessagesState) -> MessagesState:
     response = model_with_tools.invoke(current_state["messages"])
     return {"messages": [response]}
 
-# def node2(current_state: MessagesState) -> MessagesState:
-#     print("---Node 2 Running--- ", current_state)
-
-#     # response = model.invoke(input_text)
-#     call_response = model_with_tools.invoke(current_state["messages"])
-    
-#     print("Node 2: model_with_tools Response:", call_response)
-#     return {"messages": [call_response]}
-
 
 # 3. Graph build karein
 workflow: StateGraph = StateGraph(MessagesState)
 
 # Nodes add karein
 workflow.add_node("node1", node1)
-# workflow.add_node("node2", node2)
-workflow.add_node("tools", ToolNode(tools))
+workflow.add_node("toolsNode", ToolNode(tools))
 
 
 
-# Edges (Raaste) connect karein
+# Edges (Raaste) connection: ReAct Agent (Ressoning + Action)
+
 workflow.add_edge(START, "node1")
-workflow.add_conditional_edges("node1", tools_condition)
-workflow.add_edge("tools", END)
 
+workflow.add_conditional_edges(
+    # Current node ke registered edges check honge.
+    "node1", # Outgoing edges of current node (node1) is = toolsNode and END node.
+    tools_condition,
+    {"tools": "toolsNode", "__end__": END}, # outgoing edge of toolsNode is = node1
+)
+
+"""
+Q: Real execution kis tarah hoti hai? 
+A: Runtime pe LangGraph hamesha ye rule follow karta hai:
+"Current node finish hui?
+→ Ab dekho is node ke outgoing edges kya hain, 
+"""
+
+workflow.add_edge("toolsNode", "node1") 
+# workflow se bahar nikalne k liye END node call hona chahiye jo is aumated workflow ko stop ya terminate kar dega. END node pe pahunchne ka matlab hai ke humne apna kaam successfully complete kar liya hai ya koi aisi condition aa gayi hai jahan se aage badhne ki zarurat nahi hai.
+# Agar END node nahi hoga to workflow infinite loop me chala jayega, kyunki har baar "node1" se "toolsNode" pe jayega aur wapas "node1" pe aayega, bina kisi termination condition ke. END node isliye zaruri hai taaki hum apne workflow ko control kar sakein aur usy terminate kar sakein jab humara kaam complete ho jaye ya jab koi aisi situation aaye jahan se aage badhna zaruri na ho.
 
 # Graph compile
 graph: CompiledStateGraph = workflow.compile()
@@ -111,4 +117,4 @@ while True:
 
 
 
-# print(graph.get_graph().draw_mermaid())
+print(graph.get_graph().draw_mermaid())

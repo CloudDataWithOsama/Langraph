@@ -1,0 +1,162 @@
+// Hi, please withdraw $1500 from my meezan bank account # 11112222233333 and deposit into Umar HBL Konnect account # 4444555556666.
+{
+  "messages": [
+    {
+      "type": "SystemMessage",
+      "content": "Your name is 'Junior'. You are a helpful assistant.",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "id": "741508b4-02a2-418a-9ca5-eb8fe6c9f9e4"
+    },
+    {
+      "type": "HumanMessage",
+      "content": "Hi, please withdraw $1000 from my meezan bank account # 123456 and deposit $500 into Areesha MCB account # 7895654.",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "name": "Tahir",
+      "id": "2b792c85-45da-4d1b-900f-bdee1853e76e"
+    },
+    {
+      "type": "AIMessage",
+      "content": [],
+      "additional_kwargs": {
+        "function_call": {
+          "name": "deposit_money",
+          "arguments": "{\"account\": 7895654, \"bankName\": \"MCB\", \"amount\": 500}"
+        },
+        "__gemini_function_call_thought_signatures__": {
+          "28b58cb4-4ac0-4338-920e-0793c2d006c1": "EjQKMgEMOdbHcONMmnM/4Iwtmq+fv+YisxHRUV6wUCJccLj+0VqOypzqRVh7e/Es9zBvqt4G"
+        }
+      },
+      "response_metadata": {
+        "finish_reason": "STOP",
+        "model_name": "gemini-3.1-flash-lite-preview",
+        "safety_ratings": [],
+        "model_provider": "google_genai"
+      },
+      "id": "lc_run--019e10fe-9435-7c33-838b-cf193d62b79f-0",
+      "tool_calls": [
+        {
+          "name": "withdraw_money",
+          "args": {
+            "account": 123456,
+            "amount": 1000,
+            "bankName": "Meezan Bank"
+          },
+          "id": "28b58cb4-4ac0-4338-920e-0793c2d006c1",
+          "type": "tool_call"
+        },
+        {
+          "name": "deposit_money",
+          "args": {
+            "account": 7895654,
+            "bankName": "MCB",
+            "amount": 500
+          },
+          "id": "df4741ad-b24a-4991-bf76-fd6827bee598",
+          "type": "tool_call"
+        }
+      ],
+      "invalid_tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 1654,
+        "output_tokens": 70,
+        "total_tokens": 1724,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "type": "ToolMessage",
+      "content": "Error: withdraw_money is not a valid tool, try one of [tavily_search, deposit_money].",
+      "name": "withdraw_money",
+      "id": "eadececf-3c94-49df-9de0-2dfed6105cbc",
+      "tool_call_id": "28b58cb4-4ac0-4338-920e-0793c2d006c1",
+      "status": "error"
+    },
+    {
+      "type": "ToolMessage",
+      "content": "{\"status\": \"ok\", \"balance\": 5000}",
+      "name": "deposit_money",
+      "id": "050db648-0271-474b-9711-45278319608c",
+      "tool_call_id": "df4741ad-b24a-4991-bf76-fd6827bee598"
+    },
+    {
+      "type": "HumanMessage",
+      "content": "Hi, please withdraw $1000 from my meezan bank account # 123456 and deposit $500 into Areesha MCB account # 7895654.",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "name": "Tahir",
+      "id": "de0e85ca-b572-45e8-9aa8-59f178a1a277"
+    },
+    {
+      "type": "AIMessage",
+      "content": [
+        {
+          "type": "text",
+          "text": "I apologize, but I do not have the ability to withdraw money from your accounts, as I only have access to a tool for depositing money. \n\nI have successfully deposited $500 into Areesha's MCB account (#7895654) as requested, but you will need to contact your bank directly or use your banking app to handle the withdrawal from your Meezan bank account.",
+          "extras": {
+            "signature": "EjQKMgEMOdbHHKfoRJnaQdv2kIdscCooK5qELk5550gmmS8YsMJ1KRhPY6KUq0xnvA8plyzd"
+          }
+        }
+      ],
+      "additional_kwargs": {},
+      "response_metadata": {
+        "finish_reason": "STOP",
+        "model_name": "gemini-3.1-flash-lite-preview",
+        "safety_ratings": [],
+        "model_provider": "google_genai"
+      },
+      "id": "lc_run--019e1106-e747-7410-b61a-6fe1b8adb03c-0",
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 1829,
+        "output_tokens": 85,
+        "total_tokens": 1914,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "type": "HumanMessage",
+      "content": "Hi, please withdraw $1500 from my meezan bank account # 11112222233333 and deposit into Umar HBL Konnect account # 4444555556666.",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "name": "Tahir",
+      "id": "74959416-056a-4859-b49e-d342461a61b7"
+    },
+    {
+      "type": "AIMessage",
+      "content": [
+        {
+          "type": "text",
+          "text": "I apologize, but as I mentioned previously, I do not have the capability to withdraw funds from your bank accounts. I only have access to a tool for depositing money.\n\nAdditionally, please be aware that for the deposit I previously performed for you, I do not have a tool to transfer money between specific accounts; I can only execute a deposit action if provided with the necessary details.\n\nTo handle these transactions safely, please use your official Meezan Bank or HBL Konnect banking application, or contact your bank directly.",
+          "extras": {
+            "signature": "EjQKMgEMOdbHQf72Z+xpOxHKE3zlevObM2dIKRJgbrDNfEdNk7lLeZp/+kPFbfuoSErhJKdy"
+          }
+        }
+      ],
+      "additional_kwargs": {},
+      "response_metadata": {
+        "finish_reason": "STOP",
+        "model_name": "gemini-3.1-flash-lite-preview",
+        "safety_ratings": [],
+        "model_provider": "google_genai"
+      },
+      "id": "lc_run--019e1112-b9b8-78d0-943f-f9af35a4a0b5-0",
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 1973,
+        "output_tokens": 105,
+        "total_tokens": 2078,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

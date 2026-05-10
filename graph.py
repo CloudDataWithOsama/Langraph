@@ -75,11 +75,11 @@ workflow.add_node("node2", node2)
 
 # Edges (Raaste) connect karein
 workflow.add_edge(START, "node1")
-# workflow.add_conditional_edges("node1", router_function, {
-#         "yes": "node2", 
-#         "no": END
-#     })
-workflow.add_edge("node1", "node2")
+workflow.add_conditional_edges("node1", router_function, {
+        "yes": "node2", 
+        "no": END
+    })
+# workflow.add_edge("node1", "node2")
 
 workflow.add_edge("node2", END)
 
